@@ -8,6 +8,23 @@ pipeline {
             }
         }
 
+        stage('SonarQube Analysis') {
+            steps {
+                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                    dir('backend') {
+                        sh '''
+                        mvn clean verify sonar:sonar \
+                          -DskipTests \
+                          -Dsonar.projectKey=gestion-projets \
+                          -Dsonar.projectName="Gestion Projets" \
+                          -Dsonar.host.url=http://localhost:9000 \
+                          -Dsonar.token=$SONAR_TOKEN
+                        '''
+                    }
+                }
+            }
+        }
+
         stage('Build & Deploy with Docker Compose') {
             steps {
                 sh 'docker compose down'
