@@ -12,7 +12,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('SonarQube') {
                     dir('backend') {
-                        sh 'mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -DskipTests -Dsonar.projectKey=gestion-projets -Dsonar.projectName="Gestion Projets"'
+                        sh 'mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=gestion-projets -Dsonar.projectName="Gestion Projets"'
                     }
                 }
             }

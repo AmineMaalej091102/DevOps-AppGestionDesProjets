@@ -1,15 +1,9 @@
 package tn.esprit.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class ProjetDTO {
 
     private Long id;
@@ -21,4 +15,36 @@ public class ProjetDTO {
 
     @JsonIgnore
     private List<ProjetDetailleDTO> projetsDetailles;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSujet() {
+        return sujet;
+    }
+
+    public void setSujet(String sujet) {
+        this.sujet = sujet;
+    }
+
+    public List<EquipeDTO> getEquipes() {
+        return equipes;
+    }
+
+    public void setEquipes(List<EquipeDTO> equipes) {
+        this.equipes = equipes;
+    }
+
+    public List<ProjetDetailleDTO> getProjetsDetailles() {
+        return projetsDetailles;
+    }
+
+    public void setProjetsDetailles(List<ProjetDetailleDTO> projetsDetailles) {
+        this.projetsDetailles = projetsDetailles;
+    }
 }

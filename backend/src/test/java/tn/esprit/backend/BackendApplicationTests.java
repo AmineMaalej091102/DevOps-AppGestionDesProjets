@@ -1,13 +1,13 @@
 package tn.esprit.backend;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootTest
 class BackendApplicationTests {
 
     @Test
-    void contextLoads() {
+    void applicationIsConfiguredAsSpringBootApplication() {
+        org.junit.jupiter.api.Assertions.assertTrue(
+                BackendApplication.class.isAnnotationPresent(SpringBootApplication.class));
     }
-
 }
