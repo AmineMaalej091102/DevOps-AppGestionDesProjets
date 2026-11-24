@@ -13,7 +13,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
                     dir('backend') {
                         sh '''
-                        mvn clean verify sonar:sonar \
+                        mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
                           -DskipTests \
                           -Dsonar.projectKey=gestion-projets \
                           -Dsonar.projectName="Gestion Projets" \
