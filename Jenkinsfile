@@ -8,7 +8,7 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
+        stage('SonarQube & Tests') {
             steps {
                 withSonarQubeEnv('SonarQube') {
                     dir('backend') {
@@ -18,17 +18,22 @@ pipeline {
             }
         }
 
-        stage('Build & Deploy with Docker Compose') {
+        stage('Build Images in Minikube') {
             steps {
-                sh 'docker compose down'
-                sh 'docker compose up -d --build'
+                sh '''
+                eval $(minikube docker-env)
+                DOCKER_BUILDKIT=0 docker build -t gestion-projets-backend:latest ./backend
+                DOCKER_BUILDKIT=0 docker build -t gestion-projets-frontend:latest ./frontend
+                '''
             }
         }
-    }
 
-    post {
-        always {
-            sh 'docker image prune -f'
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f k8s/'
+                sh 'kubectl rollout restart deployment/backend-deployment -n devops'
+                sh 'kubectl rollout restart deployment/frontend-deployment -n devops'
+            }
         }
     }
 }
