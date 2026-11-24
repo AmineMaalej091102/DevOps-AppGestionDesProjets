@@ -10,16 +10,9 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                withSonarQubeEnv('SonarQube') {
                     dir('backend') {
-                        sh '''
-                        mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-                          -DskipTests \
-                          -Dsonar.projectKey=gestion-projets \
-                          -Dsonar.projectName="Gestion Projets" \
-                          -Dsonar.host.url=http://localhost:9000 \
-                          -Dsonar.token=$SONAR_TOKEN
-                        '''
+                        sh 'mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -DskipTests -Dsonar.projectKey=gestion-projets -Dsonar.projectName="Gestion Projets"'
                     }
                 }
             }
