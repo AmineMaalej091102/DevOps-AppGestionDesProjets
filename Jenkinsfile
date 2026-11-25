@@ -21,9 +21,10 @@ pipeline {
         stage('Build Images in Minikube') {
             steps {
                 sh '''
-                eval $(minikube docker-env)
-                DOCKER_BUILDKIT=0 docker build -t gestion-projets-backend:latest ./backend
-                DOCKER_BUILDKIT=0 docker build -t gestion-projets-frontend:latest ./frontend
+                docker build -t gestion-projets-backend:latest ./backend
+                docker build -t gestion-projets-frontend:latest ./frontend
+                minikube image load gestion-projets-backend:latest
+                minikube image load gestion-projets-frontend:latest
                 '''
             }
         }
